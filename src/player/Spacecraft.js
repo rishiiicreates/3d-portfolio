@@ -108,7 +108,7 @@ export class Spacecraft {
     this.body = new CANNON.Body({
       mass: 50,
       material: physicsWorld.defaultMaterial,
-      position: new CANNON.Vec3(0, 50, 500), // Start further out
+      position: new CANNON.Vec3(0, 50, 2500), // Start far away from the sun
       linearDamping: 0.1, // Much lower drag for high top speed
       angularDamping: 0.6
     });
@@ -123,6 +123,27 @@ export class Spacecraft {
     this.mesh.quaternion.copy(this.body.quaternion);
 
     if (!this.body) return;
+
+    if (this.isDead) {
+      if (this.explosion) {
+        this.explosion.age += delta;
+        const positions = this.explosion.particles.geometry.attributes.position.array;
+        for (let i = 0; i < 200; i++) {
+          positions[i*3] += this.explosion.velocities[i*3] * delta;
+          positions[i*3+1] += this.explosion.velocities[i*3+1] * delta;
+          positions[i*3+2] += this.explosion.velocities[i*3+2] * delta;
+        }
+        this.explosion.particles.geometry.attributes.position.needsUpdate = true;
+        this.explosion.particles.material.opacity = Math.max(0, 1.0 - this.explosion.age / 2.0);
+      }
+      return;
+    }
+
+    // Check collision with Sun
+    if (this.body.position.length() < 280) {
+      this.explode();
+      return;
+    }
 
     // Update shader time
     this.fireUniforms.time.value += delta;
@@ -179,6 +200,54 @@ export class Spacecraft {
   }
 
   getPosition() {
-    return this.mesh.position;
+    return this.body.position;
+  }
+
+  explode() {
+    if (this.isDead) return;
+    this.isDead = true;
+    this.mesh.visible = false;
+    this.body.velocity.set(0, 0, 0);
+    this.body.angularVelocity.set(0, 0, 0);
+
+    const particleCount = 200;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    const velocities = [];
+
+    const origin = this.getPosition();
+    for (let i = 0; i < particleCount; i++) {
+      positions[i * 3] = origin.x;
+      positions[i * 3 + 1] = origin.y;
+      positions[i * 3 + 2] = origin.z;
+      velocities.push(
+        (Math.random() - 0.5) * 400,
+        (Math.random() - 0.5) * 400,
+        (Math.random() - 0.5) * 400
+      );
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const material = new THREE.PointsMaterial({
+      color: 0xffaa00,
+      size: 15,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+
+    const particles = new THREE.Points(geometry, material);
+    this.scene.add(particles);
+    this.explosion = { particles, velocities, age: 0 };
+
+    setTimeout(() => {
+      this.scene.remove(particles);
+      this.explosion = null;
+      this.body.position.set(0, 50, 2500); // Respawn far away
+      this.body.velocity.set(0, 0, 0);
+      this.body.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), 0);
+      this.mesh.visible = true;
+      this.isDead = false;
+    }, 2000);
   }
 }

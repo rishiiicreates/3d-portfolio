@@ -10,11 +10,8 @@ export class SunCorona {
     this.light = new THREE.PointLight(0xFF8833, 5, 50000, 1.5);
     this.group.add(this.light);
 
-    // Layers (Flares removed as requested)
-    this.halo = this.createSprite(this.createGlowCanvas('#FF2200', 'rgba(0,0,0,0)'), radius * 12, 0.4);
+    // Layers (Only core remains)
     this.core = this.createSprite(this.createGlowCanvas('#FFFFFF', '#FFAA00'), radius * 4, 1.0);
-
-    this.group.add(this.halo);
     this.group.add(this.core);
   }
 
@@ -52,10 +49,7 @@ export class SunCorona {
   update(time, delta) {
     // Pulse scale slightly
     const pulse = Math.sin(time * 2.0) * 0.02 + 1.0;
-    
-    [this.core, this.halo].forEach((sprite, index) => {
-      const s = sprite.userData.baseScale * (pulse + index * 0.01);
-      sprite.scale.set(s, s, 1);
-    });
+    const s = this.core.userData.baseScale * pulse;
+    this.core.scale.set(s, s, 1);
   }
 }

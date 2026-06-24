@@ -194,10 +194,12 @@ export class HUD {
     const controlsHint = document.createElement('div');
     controlsHint.className = 'hud-controls-hint';
     controlsHint.innerHTML = `
-      [W/A/S/D] THRUST<br>
-      [SPACE] JUMP<br>
-      [SCROLL] ZOOM<br>
-      [DRAG] PAN CAM
+      [W/S] THRUST<br>
+      [A/D] YAW<br>
+      [↑/↓] PITCH<br>
+      [←/→] ROLL<br>
+      [SPACE] BRAKE<br>
+      [E] INTERACT
     `;
     this.container.appendChild(controlsHint);
 

@@ -38,13 +38,10 @@ export class Input {
         this.state.pitchDown = isDown; // Nose down
         break;
       case 'ArrowLeft':
-        this.state.rollRight = isDown;
+        this.state.rollLeft = isDown;
         break;
       case 'ArrowRight':
-        this.state.rollLeft = isDown;
-        break;
-      case 'KeyQ':
-        this.state.rollLeft = isDown;
+        this.state.rollRight = isDown;
         break;
       case 'Space':
         this.state.jump = isDown;

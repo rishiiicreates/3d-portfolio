@@ -79,13 +79,14 @@ export class HUD {
           position: absolute;
           top: 20px;
           right: 20px;
-          width: 200px;
-          height: 200px;
+          width: 150px;
+          height: 150px;
           border-radius: 50%;
           border: 2px solid rgba(0, 243, 255, 0.5);
-          background: radial-gradient(circle, rgba(0,243,255,0.1) 0%, rgba(5,10,20,0.8) 70%);
+          background: rgba(5, 10, 20, 0.9);
           overflow: hidden;
           box-shadow: 0 0 20px rgba(0, 243, 255, 0.2) inset, 0 0 10px rgba(0, 243, 255, 0.2);
+          z-index: 10;
         }
         .minimap-center {
           position: absolute;
@@ -111,17 +112,19 @@ export class HUD {
           position: absolute;
           border-radius: 50%;
           transform: translate(-50%, -50%);
+          z-index: 5;
         }
         .minimap-player {
           position: absolute;
           width: 0; height: 0;
-          border-left: 5px solid transparent;
-          border-right: 5px solid transparent;
-          border-bottom: 10px solid #00f3ff;
+          border-left: 6px solid transparent;
+          border-right: 6px solid transparent;
+          border-bottom: 12px solid #00ffaa;
           transform-origin: 50% 50%;
-          margin-top: -5px;
-          margin-left: -5px;
-          filter: drop-shadow(0 0 4px #00f3ff);
+          margin-top: -6px;
+          margin-left: -6px;
+          filter: drop-shadow(0 0 4px #00ffaa);
+          z-index: 100;
         }
         
         .hud-controls-hint {

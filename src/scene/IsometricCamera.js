@@ -60,22 +60,49 @@ export class IsometricCamera {
     });
   }
 
-  update(delta, targetPosition) {
-    // If the ship drives, smoothly pull the camera back to it!
+  update(delta, spacecraft) {
+    if (!spacecraft || !spacecraft.mesh) return;
+
+    const targetPosition = spacecraft.getPosition();
+
+    // Reset panning drag slowly if ship moves
     const shipMoved = targetPosition.distanceToSquared(this.lastTargetPos) > 0.05;
     if (shipMoved && !this.isDragging) {
       this.dragOffset.lerp(new THREE.Vector3(), delta * 3);
     }
     this.lastTargetPos.copy(targetPosition);
 
-    // Combine ship position + drag offset
-    const finalTarget = new THREE.Vector3().copy(targetPosition).add(this.dragOffset);
-
-    // Smoothly follow the target
-    this.target.lerp(finalTarget, delta * 5);
+    // Get the backward vector from the spacecraft's rotation
+    // We want the camera to sit behind and above the ship.
+    const backVector = new THREE.Vector3(0, 0, 1); // Local backward
+    backVector.applyQuaternion(spacecraft.mesh.quaternion); 
     
-    const desiredPos = this.target.clone().add(this.offset);
-    this.camera.position.lerp(desiredPos, delta * 5);
-    this.camera.lookAt(this.target);
+    // Scale it to our desired follow distance
+    const followDistance = 40 * this.zoomLevel;
+    backVector.multiplyScalar(followDistance);
+    
+    // Also add some height relative to the ship's local 'up'
+    const upVector = new THREE.Vector3(0, 1, 0);
+    upVector.applyQuaternion(spacecraft.mesh.quaternion);
+    const followHeight = 15 * this.zoomLevel;
+    upVector.multiplyScalar(followHeight);
+
+    // The desired camera position is behind and above the ship
+    const idealOffset = new THREE.Vector3().addVectors(backVector, upVector);
+    const desiredPos = new THREE.Vector3().copy(targetPosition).add(idealOffset).add(this.dragOffset);
+
+    // Snap the look-at target directly to the ship so it never flies off-screen
+    this.target.copy(targetPosition).add(this.dragOffset);
+    
+    // Look slightly ahead of the ship
+    const forwardVector = new THREE.Vector3(0, 0, -1);
+    forwardVector.applyQuaternion(spacecraft.mesh.quaternion).multiplyScalar(20);
+    const lookAtPos = new THREE.Vector3().copy(this.target).add(forwardVector);
+
+    // Lerp the camera position quickly for a tight chase feel
+    this.camera.position.lerp(desiredPos, delta * 15);
+    
+    // Always look at the ship (or slightly ahead)
+    this.camera.lookAt(lookAtPos);
   }
 }

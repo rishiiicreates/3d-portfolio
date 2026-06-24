@@ -1,3 +1,5 @@
+import * as CANNON from 'cannon-es';
+
 export class HUD {
   constructor() {
     this.container = document.createElement('div');
@@ -219,14 +221,11 @@ export class HUD {
     // Minimap Player Update
     this.updateMinimapPos(this.playerBlip, pos.x, pos.z);
     
-    // Player Rotation on minimap (convert quaternion to euler)
-    // Since spacecraft rotates on Y mostly, we can get yaw
-    const forward = { x: 0, y: 0, z: -1 };
+    // Player Rotation on minimap
+    // Use CANNON.Vec3 instead of plain object to prevent math crashes!
+    const forward = new CANNON.Vec3(0, 0, -1);
     spacecraft.body.quaternion.vmult(forward, forward);
     const angle = Math.atan2(forward.x, forward.z);
-    // CSS rotate starts from top pointing up. Our math might need an offset.
-    // atan2(x, z) means 0 when facing -Z? No, atan2(0, -1) = PI.
-    // Let's just apply -angle
     this.playerBlip.style.transform = `translate(-50%, -50%) rotate(${-angle + Math.PI}rad)`;
 
     // Minimap Planets Update

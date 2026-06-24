@@ -119,7 +119,7 @@ class Application {
     this.spacecraft.update(delta, this.input.state);
     
     // Camera Update
-    this.cameraController.update(delta, this.spacecraft.getPosition());
+    this.cameraController.update(delta, this.spacecraft);
     
     // Planets Update (Labels)
     this.planets.update(delta, this.cameraController.camera);

@@ -32,10 +32,10 @@ export class Input {
         this.state.right = isDown;
         break;
       case 'ArrowUp':
-        this.state.pitchDown = isDown; // Nose down
+        this.state.pitchUp = isDown; // Nose up
         break;
       case 'ArrowDown':
-        this.state.pitchUp = isDown; // Nose up
+        this.state.pitchDown = isDown; // Nose down
         break;
       case 'ArrowLeft':
       case 'KeyQ':

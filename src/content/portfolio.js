@@ -3,8 +3,8 @@
 // ═══════════════════════════════════════════════════════════
 
 export const portfolioData = {
-  // ─── ASTRA — Base Station ───────────────────────────────
-  astra: {
+  // ─── EARTH — Base Station ───────────────────────────────
+  earth: {
     moons: [
       {
         id: 'who-i-am',
@@ -42,8 +42,8 @@ export const portfolioData = {
     ],
   },
 
-  // ─── FORGE — Projects & Builds ──────────────────────────
-  forge: {
+  // ─── MARS — Projects & Builds ──────────────────────────
+  mars: {
     moons: [
       {
         id: 'rawfy',
@@ -110,8 +110,8 @@ export const portfolioData = {
     ],
   },
 
-  // ─── CODEX — Skills & Stack ─────────────────────────────
-  codex: {
+  // ─── NEPTUNE — Skills & Stack ─────────────────────────────
+  neptune: {
     moons: [
       {
         id: 'ai-ml',
@@ -207,8 +207,8 @@ export const portfolioData = {
     ],
   },
 
-  // ─── LORE — About Me ───────────────────────────────────
-  lore: {
+  // ─── JUPITER — About Me ──────────────────────────────────
+  jupiter: {
     moons: [
       {
         id: 'my-story',
@@ -243,8 +243,8 @@ export const portfolioData = {
     ],
   },
 
-  // ─── SIGNAL — Blog & Writing ────────────────────────────
-  signal: {
+  // ─── SATURN — Blog & Writing ────────────────────────────
+  saturn: {
     moons: [
       {
         id: 'blog-1',
@@ -269,8 +269,8 @@ export const portfolioData = {
     ],
   },
 
-  // ─── NEXUS — Connect ────────────────────────────────────
-  nexus: {
+  // ─── VENUS — Connect ──────────────────────────────────
+  venus: {
     moons: [
       {
         id: 'email',

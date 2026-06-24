@@ -113,7 +113,7 @@ export class Spacecraft {
       angularDamping: 0.6
     });
     this.body.addShape(shape);
-    this.body.angularFactor.set(0, 1, 0); // Lock pitch and roll
+    this.body.angularFactor.set(1, 1, 1); // Unlock pitch, yaw, and roll for full 3D flight
     physicsWorld.world.addBody(this.body);
   }
 
@@ -175,15 +175,25 @@ export class Spacecraft {
       0.08
     );
 
-    // Direct angular velocity for responsive arcade turning
-    if (input.left) {
-      this.body.angularVelocity.y = 3.5;
-    } else if (input.right) {
-      this.body.angularVelocity.y = -3.5;
-    } else {
-      // Instantly stop turning when key is released for snappy arcade feel
-      this.body.angularVelocity.y = 0;
-    }
+    // Direct local angular velocity for full 3D 6DOF responsive turning
+    let pitch = 0;
+    let yaw = 0;
+    let roll = 0;
+
+    if (input.pitchDown) pitch = 2.0;
+    if (input.pitchUp) pitch = -2.0;
+    if (input.left) yaw = 2.5;
+    if (input.right) yaw = -2.5;
+    if (input.rollLeft) roll = 2.5;
+    if (input.rollRight) roll = -2.5;
+
+    // Convert local angular velocity to world space
+    const localAngVel = new CANNON.Vec3(pitch, yaw, roll);
+    const worldAngVel = new CANNON.Vec3();
+    this.body.quaternion.vmult(localAngVel, worldAngVel);
+    
+    // Set directly for tight arcade feel
+    this.body.angularVelocity.copy(worldAngVel);
 
     // Jump / Bounce
     if (input.jump && this.body.position.y < 3) {

@@ -16,13 +16,14 @@ A highly interactive, 3D web-based portfolio built using **Three.js** and **Cann
 - **Cannon.js:** For physics, collisions, and spacecraft hovercraft-style movement.
 - **Vite:** For lighting-fast bundling and development.
 
-## 🎮 How to Play
+## 🎮 How to Play (Full 3D Flight)
 
-- **W** - Accelerate Forward
-- **S** - Reverse / Brake
-- **A / D** - Turn Left / Right
+- **W / S** - Forward / Backward Thrust
+- **A / D** - Yaw (Turn Left / Right)
+- **Up / Down Arrows** - Pitch (Nose Up / Down)
+- **Left / Right Arrows (or Q)** - Roll (Barrel Roll)
 - **Mouse Wheel** - Zoom Camera In / Out
-- **E** - Interact / Explore a planet when in orbit (displays portfolio info)
+- **E** - Interact / Explore a planet when in orbit
 
 ## 💻 Local Development
 

@@ -5,6 +5,10 @@ export class Input {
       backward: false,
       left: false,
       right: false,
+      pitchUp: false,
+      pitchDown: false,
+      rollLeft: false,
+      rollRight: false,
       jump: false,
       interact: false
     };
@@ -16,20 +20,29 @@ export class Input {
   updateState(e, isDown) {
     switch(e.code) {
       case 'KeyW':
-      case 'ArrowUp':
         this.state.forward = isDown;
         break;
       case 'KeyS':
-      case 'ArrowDown':
         this.state.backward = isDown;
         break;
       case 'KeyA':
-      case 'ArrowLeft':
         this.state.left = isDown;
         break;
       case 'KeyD':
-      case 'ArrowRight':
         this.state.right = isDown;
+        break;
+      case 'ArrowUp':
+        this.state.pitchDown = isDown; // Nose down
+        break;
+      case 'ArrowDown':
+        this.state.pitchUp = isDown; // Nose up
+        break;
+      case 'ArrowLeft':
+      case 'KeyQ':
+        this.state.rollLeft = isDown;
+        break;
+      case 'ArrowRight':
+        this.state.rollRight = isDown;
         break;
       case 'Space':
         this.state.jump = isDown;

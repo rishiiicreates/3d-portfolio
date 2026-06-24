@@ -96,10 +96,14 @@ export class IsometricCamera {
     
     // Look slightly ahead of the ship
     const forwardVector = new THREE.Vector3(0, 0, -1);
-    forwardVector.applyQuaternion(spacecraft.mesh.quaternion).multiplyScalar(20);
+    forwardVector.applyQuaternion(spacecraft.mesh.quaternion).multiplyScalar(100);
     const lookAtPos = new THREE.Vector3().copy(this.target).add(forwardVector);
 
-    // Lerp the camera position quickly for a tight chase feel
+    // Update camera 'up' vector to match ship's 'up' so it can barrel roll!
+    // We smooth it slightly to prevent snapping
+    this.camera.up.lerp(upVector, delta * 10);
+
+    // Lerp the camera position for a tight chase feel
     this.camera.position.lerp(desiredPos, delta * 15);
     
     // Always look at the ship (or slightly ahead)

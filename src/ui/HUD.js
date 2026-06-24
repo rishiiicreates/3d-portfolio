@@ -221,17 +221,23 @@ export class HUD {
     const pos = spacecraft.body.position;
     document.getElementById('coord-val').innerText = `X:${Math.round(pos.x / 10)} Z:${Math.round(pos.z / 10)}`;
 
-    // Minimap Player Update
-    this.updateMinimapPos(this.playerBlip, pos.x, pos.z);
+    // Minimap Player Update (Player stays in center!)
+    this.playerBlip.style.left = '50%';
+    this.playerBlip.style.top = '50%';
     
     // Player Rotation on minimap
-    // Use CANNON.Vec3 instead of plain object to prevent math crashes!
     const forward = new CANNON.Vec3(0, 0, -1);
     spacecraft.body.quaternion.vmult(forward, forward);
     const angle = Math.atan2(forward.x, forward.z);
     this.playerBlip.style.transform = `translate(-50%, -50%) rotate(${-angle + Math.PI}rad)`;
 
-    // Minimap Planets Update
+    // Update Sun Position (Sun is at 0, 0) relative to player
+    const sunBlip = this.minimap.querySelector('.minimap-center');
+    if (sunBlip) {
+      this.updateMinimapPos(sunBlip, 0 - pos.x, 0 - pos.z);
+    }
+
+    // Minimap Planets Update relative to player
     planets.forEach(p => {
       let blip = this.planetBlips[p.id];
       if (!blip) {
@@ -244,15 +250,14 @@ export class HUD {
         this.minimap.appendChild(blip);
         this.planetBlips[p.id] = blip;
       }
-      this.updateMinimapPos(blip, p.mesh.position.x, p.mesh.position.z);
+      this.updateMinimapPos(blip, p.mesh.position.x - pos.x, p.mesh.position.z - pos.z);
     });
   }
 
-  updateMinimapPos(element, worldX, worldZ) {
-    // Map -maxMapDistance..maxMapDistance to 0%..100%
+  updateMinimapPos(element, relX, relZ) {
     const mapScale = 50 / this.maxMapDistance;
-    const pctX = 50 + (worldX * mapScale);
-    const pctY = 50 + (worldZ * mapScale); // Z is down in world, so Y is down in CSS
+    const pctX = 50 + (relX * mapScale);
+    const pctY = 50 + (relZ * mapScale);
     element.style.left = pctX + '%';
     element.style.top = pctY + '%';
   }

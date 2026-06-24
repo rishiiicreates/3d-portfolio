@@ -34,16 +34,16 @@ export class Planets {
 
     // Orbit paths config
     const layout = [
-      { id: 'codex',    name: 'Codex',   emoji: '📖', subtitle: 'Skills', color: 0x10B981, tex: '/textures/mercurymap.jpg',   radius: 60,  orbitDist: 600,  orbitSpeed: 0.18, offset: 4 },
-      { id: 'signal',   name: 'Signal',  emoji: '📡', subtitle: 'Blog', color: 0x8B5CF6, tex: '/textures/venusmap.jpg',     radius: 70,  orbitDist: 1000, orbitSpeed: 0.12, offset: 5 },
-      { id: 'astra',    name: 'Astra',   emoji: '🌍', subtitle: 'Who I Am', color: 0x3B82F6, tex: '/textures/earth_daymap.jpg', radius: 100, orbitDist: 1500, orbitSpeed: 0.1,  offset: 0 },
-      { id: 'forge',    name: 'Forge',   emoji: '🔥', subtitle: 'My Projects', color: 0xEF4444, tex: '/textures/marsmap.jpg',      radius: 80,  orbitDist: 2100, orbitSpeed: 0.08, offset: 2 },
-      { id: 'lore',     name: 'Lore',    emoji: '✨', subtitle: 'My Story', color: 0xF59E0B, tex: '/textures/jupiter.jpg',      radius: 180, orbitDist: 3200, orbitSpeed: 0.05, offset: 1 },
+      { id: 'mercury',  name: 'Mercury', emoji: '📖', subtitle: 'Skills', color: 0x10B981, tex: '/textures/mercurymap.jpg',   radius: 60,  orbitDist: 600,  orbitSpeed: 0.18, offset: 4 },
+      { id: 'venus',    name: 'Venus',   emoji: '📡', subtitle: 'Blog', color: 0x8B5CF6, tex: '/textures/venusmap.jpg',     radius: 70,  orbitDist: 1000, orbitSpeed: 0.12, offset: 5 },
+      { id: 'earth',    name: 'Earth',   emoji: '🌍', subtitle: 'Who I Am', color: 0x3B82F6, tex: '/textures/earth_daymap.jpg', radius: 100, orbitDist: 1500, orbitSpeed: 0.1,  offset: 0 },
+      { id: 'mars',     name: 'Mars',    emoji: '🔥', subtitle: 'My Projects', color: 0xEF4444, tex: '/textures/marsmap.jpg',      radius: 80,  orbitDist: 2100, orbitSpeed: 0.08, offset: 2 },
+      { id: 'jupiter',  name: 'Jupiter', emoji: '✨', subtitle: 'My Story', color: 0xF59E0B, tex: '/textures/jupiter.jpg',      radius: 180, orbitDist: 3200, orbitSpeed: 0.05, offset: 1 },
       
       // Additional planets from the package
       { id: 'saturn',   name: 'Saturn',  emoji: '🪐', subtitle: 'Archives', color: 0xD97706, tex: '/textures/saturnmap.jpg',    radius: 160, orbitDist: 4400, orbitSpeed: 0.03, offset: 3, ringTex: '/textures/saturn_ring.png' },
       { id: 'uranus',   name: 'Uranus',  emoji: '🧊', subtitle: 'Experiments', color: 0x0EA5E9, tex: '/textures/uranus.jpg',       radius: 140, orbitDist: 5500, orbitSpeed: 0.02, offset: 4, ringTex: '/textures/uranus_ring.png' },
-      { id: 'nexus',    name: 'Nexus',   emoji: '🔗', subtitle: 'Connect', color: 0x06B6D4, tex: '/textures/neptune.jpg',      radius: 120, orbitDist: 6500, orbitSpeed: 0.015, offset: 3 },
+      { id: 'neptune',  name: 'Neptune', emoji: '🔗', subtitle: 'Connect', color: 0x06B6D4, tex: '/textures/neptune.jpg',      radius: 120, orbitDist: 6500, orbitSpeed: 0.015, offset: 3 },
       { id: 'pluto',    name: 'Pluto',   emoji: '🌑', subtitle: 'Secret', color: 0x64748B, tex: '/textures/plutomap.jpg',     radius: 40,  orbitDist: 7500, orbitSpeed: 0.01, offset: 2 }
     ];
 

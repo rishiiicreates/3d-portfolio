@@ -110,8 +110,8 @@ export const portfolioData = {
     ],
   },
 
-  // ─── NEPTUNE — Skills & Stack ─────────────────────────────
-  neptune: {
+  // ─── MERCURY — Skills & Stack ─────────────────────────────
+  mercury: {
     moons: [
       {
         id: 'ai-ml',
@@ -243,8 +243,8 @@ export const portfolioData = {
     ],
   },
 
-  // ─── SATURN — Blog & Writing ────────────────────────────
-  saturn: {
+  // ─── VENUS — Blog & Writing ────────────────────────────
+  venus: {
     moons: [
       {
         id: 'blog-1',
@@ -269,8 +269,8 @@ export const portfolioData = {
     ],
   },
 
-  // ─── VENUS — Connect ──────────────────────────────────
-  venus: {
+  // ─── NEPTUNE — Connect ──────────────────────────────────
+  neptune: {
     moons: [
       {
         id: 'email',

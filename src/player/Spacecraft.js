@@ -200,7 +200,7 @@ export class Spacecraft {
   }
 
   getPosition() {
-    return this.body.position;
+    return this.mesh.position;
   }
 
   explode() {

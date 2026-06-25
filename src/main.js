@@ -26,6 +26,51 @@ class Application {
     this.renderer.domElement.style.position = 'fixed';
     this.renderer.domElement.style.top = '0';
     this.renderer.domElement.style.left = '0';
+
+    // Loading Screen
+    this.loadingScreen = document.createElement('div');
+    this.loadingScreen.id = 'loading-screen';
+    this.loadingScreen.style.position = 'fixed';
+    this.loadingScreen.style.top = '0';
+    this.loadingScreen.style.left = '0';
+    this.loadingScreen.style.width = '100vw';
+    this.loadingScreen.style.height = '100vh';
+    this.loadingScreen.style.backgroundColor = '#050811';
+    this.loadingScreen.style.zIndex = '9999';
+    this.loadingScreen.style.display = 'flex';
+    this.loadingScreen.style.flexDirection = 'column';
+    this.loadingScreen.style.alignItems = 'center';
+    this.loadingScreen.style.justifyContent = 'center';
+    this.loadingScreen.style.transition = 'opacity 0.8s ease-out';
+    this.loadingScreen.innerHTML = `
+      <div style="text-align: center;">
+        <h1 style="font-family: Orbitron, sans-serif; color: #00f3ff; margin-bottom: 20px; text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); letter-spacing: 2px;">INITIALIZING SOLAR SYSTEM</h1>
+        <div style="width: 400px; height: 12px; border: 1px solid rgba(0, 243, 255, 0.4); border-radius: 6px; overflow: hidden; margin: 0 auto;">
+          <div id="loading-bar" style="width: 0%; height: 100%; background: #00f3ff; box-shadow: 0 0 15px #00f3ff; transition: width 0.1s linear;"></div>
+        </div>
+        <p id="loading-text" style="font-family: 'Share Tech Mono', monospace; color: #00f3ff; margin-top: 15px; font-size: 16px; opacity: 0.8;">Booting engine...</p>
+      </div>
+    `;
+    document.body.appendChild(this.loadingScreen);
+
+    THREE.DefaultLoadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
+      const progress = (itemsLoaded / itemsTotal) * 100;
+      const bar = document.getElementById('loading-bar');
+      const text = document.getElementById('loading-text');
+      if (bar) bar.style.width = progress + '%';
+      if (text) text.innerText = `Loading Assets... ${Math.round(progress)}%`;
+    };
+
+    THREE.DefaultLoadingManager.onLoad = () => {
+      setTimeout(() => {
+        if (this.loadingScreen) {
+          this.loadingScreen.style.opacity = '0';
+          setTimeout(() => {
+            this.loadingScreen.remove();
+          }, 800);
+        }
+      }, 500); // Small delay to let textures hit the GPU
+    };
     
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x050811);

@@ -34,17 +34,17 @@ export class Planets {
 
     // Orbit paths config
     const layout = [
-      { id: 'mercury',  name: 'Mercury', emoji: '📖', subtitle: 'Skills', color: 0x10B981, tex: '/textures/mercurymap.jpg',   radius: 60,  orbitDist: 600,  orbitSpeed: 0.18, offset: 4 },
-      { id: 'venus',    name: 'Venus',   emoji: '📡', subtitle: 'Blog', color: 0x8B5CF6, tex: '/textures/venusmap.jpg',     radius: 70,  orbitDist: 1000, orbitSpeed: 0.12, offset: 5 },
-      { id: 'earth',    name: 'Earth',   emoji: '🌍', subtitle: 'Who I Am', color: 0x3B82F6, tex: '/textures/earth_daymap.jpg', radius: 100, orbitDist: 1500, orbitSpeed: 0.1,  offset: 0 },
-      { id: 'mars',     name: 'Mars',    emoji: '🔥', subtitle: 'My Projects', color: 0xEF4444, tex: '/textures/marsmap.jpg',      radius: 80,  orbitDist: 2100, orbitSpeed: 0.08, offset: 2 },
-      { id: 'jupiter',  name: 'Jupiter', emoji: '✨', subtitle: 'My Story', color: 0xF59E0B, tex: '/textures/jupiter.jpg',      radius: 180, orbitDist: 3200, orbitSpeed: 0.05, offset: 1 },
+      { id: 'mercury',  name: 'Mercury', emoji: '📖', subtitle: 'Skills', color: 0x10B981, tex: '/textures/mercurymap.jpg',   radius: 60,  orbitDist: 600,  orbitSpeed: 0.18, offset: 4, inclination: 0.122 },
+      { id: 'venus',    name: 'Venus',   emoji: '📡', subtitle: 'Blog', color: 0x8B5CF6, tex: '/textures/venusmap.jpg',     radius: 70,  orbitDist: 1000, orbitSpeed: 0.12, offset: 5, inclination: 0.059 },
+      { id: 'earth',    name: 'Earth',   emoji: '🌍', subtitle: 'Who I Am', color: 0x3B82F6, tex: '/textures/earth_daymap.jpg', radius: 100, orbitDist: 1500, orbitSpeed: 0.1,  offset: 0, inclination: 0.000 },
+      { id: 'mars',     name: 'Mars',    emoji: '🔥', subtitle: 'My Projects', color: 0xEF4444, tex: '/textures/marsmap.jpg',      radius: 80,  orbitDist: 2100, orbitSpeed: 0.08, offset: 2, inclination: 0.032 },
+      { id: 'jupiter',  name: 'Jupiter', emoji: '✨', subtitle: 'My Story', color: 0xF59E0B, tex: '/textures/jupiter.jpg',      radius: 180, orbitDist: 3200, orbitSpeed: 0.05, offset: 1, inclination: 0.023 },
       
       // Additional planets from the package
-      { id: 'saturn',   name: 'Saturn',  emoji: '🪐', subtitle: 'Archives', color: 0xD97706, tex: '/textures/saturnmap.jpg',    radius: 160, orbitDist: 4400, orbitSpeed: 0.03, offset: 3, ringTex: '/textures/saturn_ring.png' },
-      { id: 'uranus',   name: 'Uranus',  emoji: '🧊', subtitle: 'Experiments', color: 0x0EA5E9, tex: '/textures/uranus.jpg',       radius: 140, orbitDist: 5500, orbitSpeed: 0.02, offset: 4, ringTex: '/textures/uranus_ring.png' },
-      { id: 'neptune',  name: 'Neptune', emoji: '🔗', subtitle: 'Connect', color: 0x06B6D4, tex: '/textures/neptune.jpg',      radius: 120, orbitDist: 6500, orbitSpeed: 0.015, offset: 3 },
-      { id: 'pluto',    name: 'Pluto',   emoji: '🌑', subtitle: 'Secret', color: 0x64748B, tex: '/textures/plutomap.jpg',     radius: 40,  orbitDist: 7500, orbitSpeed: 0.01, offset: 2 }
+      { id: 'saturn',   name: 'Saturn',  emoji: '🪐', subtitle: 'Archives', color: 0xD97706, tex: '/textures/saturnmap.jpg',    radius: 160, orbitDist: 4400, orbitSpeed: 0.03, offset: 3, ringTex: '/textures/saturn_ring.png', inclination: 0.043 },
+      { id: 'uranus',   name: 'Uranus',  emoji: '🧊', subtitle: 'Experiments', color: 0x0EA5E9, tex: '/textures/uranus.jpg',       radius: 140, orbitDist: 5500, orbitSpeed: 0.02, offset: 4, ringTex: '/textures/uranus_ring.png', inclination: 0.013 },
+      { id: 'neptune',  name: 'Neptune', emoji: '🔗', subtitle: 'Connect', color: 0x06B6D4, tex: '/textures/neptune.jpg',      radius: 120, orbitDist: 6500, orbitSpeed: 0.015, offset: 3, inclination: 0.031 },
+      { id: 'pluto',    name: 'Pluto',   emoji: '🌑', subtitle: 'Secret', color: 0x64748B, tex: '/textures/plutomap.jpg',     radius: 40,  orbitDist: 7500, orbitSpeed: 0.01, offset: 2, inclination: 0.300 }
     ];
 
     layout.forEach((config) => {
@@ -59,8 +59,11 @@ export class Planets {
       });
       const mesh = new THREE.Mesh(geom, mat);
       
-      // Placed exactly on Y=0 so the plane bisects it
-      mesh.position.set(config.orbitDist, 0, 0); 
+      // Placed with inclination at angle 0
+      const initPx = config.orbitDist;
+      const initPz = 0;
+      const initPy = 0; // At angle 0, sin(angle) is 0, so y is 0
+      mesh.position.set(initPx, initPy, initPz); 
       mesh.castShadow = true;
       mesh.receiveShadow = true;
       scene.add(mesh);
@@ -97,9 +100,14 @@ export class Planets {
       // Orbit Line
       const orbitGeom = new THREE.BufferGeometry();
       const orbitPts = [];
+      const incl = config.inclination || 0;
       for (let i=0; i<=64; i++) {
         const a = (i/64) * Math.PI * 2;
-        orbitPts.push(new THREE.Vector3(Math.cos(a)*config.orbitDist, 0, Math.sin(a)*config.orbitDist));
+        const ox = Math.cos(a) * config.orbitDist;
+        const oz = Math.sin(a) * config.orbitDist;
+        const oy = oz * Math.sin(incl);
+        const fz = oz * Math.cos(incl);
+        orbitPts.push(new THREE.Vector3(ox, oy, fz));
       }
       orbitGeom.setFromPoints(orbitPts);
       const orbitMat = new THREE.LineBasicMaterial({ color: 0x475569, transparent: true, opacity: 0.3 });
@@ -112,7 +120,7 @@ export class Planets {
         mass: 0, 
         type: CANNON.Body.KINEMATIC, // Moves via code, but pushes dynamic bodies
         shape: shape,
-        position: new CANNON.Vec3(config.orbitDist, 0, 0)
+        position: new CANNON.Vec3(initPx, initPy, initPz)
       });
       physicsWorld.world.addBody(body);
 
@@ -127,6 +135,7 @@ export class Planets {
         orbitDist: config.orbitDist,
         orbitSpeed: config.orbitSpeed,
         offset: config.offset,
+        inclination: config.inclination || 0,
         config: { color: config.color, emoji: config.emoji, name: config.name, subtitle: config.subtitle }
       });
     });
@@ -143,13 +152,16 @@ export class Planets {
       const angle = this.time * p.orbitSpeed + p.offset;
       const px = Math.cos(angle) * p.orbitDist;
       const pz = Math.sin(angle) * p.orbitDist;
+      
+      const py = pz * Math.sin(p.inclination);
+      const finalZ = pz * Math.cos(p.inclination);
 
       // Update Mesh & Physics Body
-      p.mesh.position.set(px, 0, pz);
+      p.mesh.position.set(px, py, finalZ);
       if (p.ringMesh) {
-        p.ringMesh.position.set(px, 0, pz);
+        p.ringMesh.position.set(px, py, finalZ);
       }
-      p.body.position.set(px, 0, pz);
+      p.body.position.set(px, py, finalZ);
       
       p.mesh.rotation.y += delta * 0.2; // Axial rotation
       

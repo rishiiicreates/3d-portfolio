@@ -58,9 +58,9 @@ export class Galaxies {
 
     // Background gradient
     const grad = ctx.createRadialGradient(center, center, 0, center, center, center);
-    grad.addColorStop(0, \`rgba(255, 255, 255, 1)\`);
-    grad.addColorStop(0.1, \`rgba(\${color[0]}, \${color[1]}, \${color[2]}, 0.8)\`);
-    grad.addColorStop(0.4, \`rgba(\${color[0]}, \${color[1]}, \${color[2]}, 0.2)\`);
+    grad.addColorStop(0, `rgba(255, 255, 255, 1)`);
+    grad.addColorStop(0.1, `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.8)`);
+    grad.addColorStop(0.4, `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.2)`);
     grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 512, 512);
@@ -81,7 +81,7 @@ export class Galaxies {
         const y = center + r * Math.sin(theta);
         
         const alpha = Math.random() * 0.5 * (1 - r / center);
-        ctx.fillStyle = \`rgba(255, 255, 255, \${alpha})\`;
+        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
         ctx.beginPath();
         ctx.arc(x, y, Math.random() * 2, 0, Math.PI * 2);
         ctx.fill();

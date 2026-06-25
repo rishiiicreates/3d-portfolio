@@ -9,15 +9,15 @@ export class Nebulas {
       time: { value: 0 }
     };
 
-    const vertexShader = \`
+    const vertexShader = `
       varying vec2 vUv;
       void main() {
         vUv = uv;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
       }
-    \`;
+    `;
 
-    const fragmentShader = \`
+    const fragmentShader = `
       uniform float time;
       varying vec2 vUv;
 
@@ -69,7 +69,7 @@ export class Nebulas {
         
         gl_FragColor = vec4(finalColor, alpha);
       }
-    \`;
+    `;
 
     const material = new THREE.ShaderMaterial({
       uniforms: this.uniforms,

@@ -32,19 +32,19 @@ export class Planets {
     sunLight.position.set(0, 0, 0);
     scene.add(sunLight);
 
-    // Orbit paths config
+    // Orbit paths config (orbitSpeed relative to Earth's 0.1, rotationSpeed relative to Earth's 0.2)
     const layout = [
-      { id: 'mercury',  name: 'Mercury', emoji: '📖', subtitle: 'Skills', color: 0x10B981, tex: '/textures/mercurymap.jpg',   radius: 60,  orbitDist: 600,  orbitSpeed: 0.18, offset: 4, inclination: 0.122 },
-      { id: 'venus',    name: 'Venus',   emoji: '📡', subtitle: 'Blog', color: 0x8B5CF6, tex: '/textures/venusmap.jpg',     radius: 70,  orbitDist: 1000, orbitSpeed: 0.12, offset: 5, inclination: 0.059 },
-      { id: 'earth',    name: 'Earth',   emoji: '🌍', subtitle: 'Who I Am', color: 0x3B82F6, tex: '/textures/earth_daymap.jpg', radius: 100, orbitDist: 1500, orbitSpeed: 0.1,  offset: 0, inclination: 0.000 },
-      { id: 'mars',     name: 'Mars',    emoji: '🔥', subtitle: 'My Projects', color: 0xEF4444, tex: '/textures/marsmap.jpg',      radius: 80,  orbitDist: 2100, orbitSpeed: 0.08, offset: 2, inclination: 0.032 },
-      { id: 'jupiter',  name: 'Jupiter', emoji: '✨', subtitle: 'My Story', color: 0xF59E0B, tex: '/textures/jupiter.jpg',      radius: 180, orbitDist: 3200, orbitSpeed: 0.05, offset: 1, inclination: 0.023 },
+      { id: 'mercury',  name: 'Mercury', emoji: '📖', subtitle: 'Skills', color: 0x10B981, tex: '/textures/mercurymap.jpg',   radius: 60,  orbitDist: 600,  orbitSpeed: 0.416, offset: 4, inclination: 0.122, rotationSpeed: 0.0034 },
+      { id: 'venus',    name: 'Venus',   emoji: '📡', subtitle: 'Blog', color: 0x8B5CF6, tex: '/textures/venusmap.jpg',     radius: 70,  orbitDist: 1000, orbitSpeed: 0.162, offset: 5, inclination: 0.059, rotationSpeed: -0.0008 },
+      { id: 'earth',    name: 'Earth',   emoji: '🌍', subtitle: 'Who I Am', color: 0x3B82F6, tex: '/textures/earth_daymap.jpg', radius: 100, orbitDist: 1500, orbitSpeed: 0.1,  offset: 0, inclination: 0.000, rotationSpeed: 0.2 },
+      { id: 'mars',     name: 'Mars',    emoji: '🔥', subtitle: 'My Projects', color: 0xEF4444, tex: '/textures/marsmap.jpg',      radius: 80,  orbitDist: 2100, orbitSpeed: 0.053, offset: 2, inclination: 0.032, rotationSpeed: 0.194 },
+      { id: 'jupiter',  name: 'Jupiter', emoji: '✨', subtitle: 'My Story', color: 0xF59E0B, tex: '/textures/jupiter.jpg',      radius: 180, orbitDist: 3200, orbitSpeed: 0.0084, offset: 1, inclination: 0.023, rotationSpeed: 0.48 },
       
       // Additional planets from the package
-      { id: 'saturn',   name: 'Saturn',  emoji: '🪐', subtitle: 'Archives', color: 0xD97706, tex: '/textures/saturnmap.jpg',    radius: 160, orbitDist: 4400, orbitSpeed: 0.03, offset: 3, ringTex: '/textures/saturn_ring.png', inclination: 0.043 },
-      { id: 'uranus',   name: 'Uranus',  emoji: '🧊', subtitle: 'Experiments', color: 0x0EA5E9, tex: '/textures/uranus.jpg',       radius: 140, orbitDist: 5500, orbitSpeed: 0.02, offset: 4, ringTex: '/textures/uranus_ring.png', inclination: 0.013 },
-      { id: 'neptune',  name: 'Neptune', emoji: '🔗', subtitle: 'Connect', color: 0x06B6D4, tex: '/textures/neptune.jpg',      radius: 120, orbitDist: 6500, orbitSpeed: 0.015, offset: 3, inclination: 0.031 },
-      { id: 'pluto',    name: 'Pluto',   emoji: '🌑', subtitle: 'Secret', color: 0x64748B, tex: '/textures/plutomap.jpg',     radius: 40,  orbitDist: 7500, orbitSpeed: 0.01, offset: 2, inclination: 0.300 }
+      { id: 'saturn',   name: 'Saturn',  emoji: '🪐', subtitle: 'Archives', color: 0xD97706, tex: '/textures/saturnmap.jpg',    radius: 160, orbitDist: 4400, orbitSpeed: 0.0034, offset: 3, ringTex: '/textures/saturn_ring.png', inclination: 0.043, rotationSpeed: 0.44 },
+      { id: 'uranus',   name: 'Uranus',  emoji: '🧊', subtitle: 'Experiments', color: 0x0EA5E9, tex: '/textures/uranus.jpg',       radius: 140, orbitDist: 5500, orbitSpeed: 0.0012, offset: 4, ringTex: '/textures/uranus_ring.png', inclination: 0.013, rotationSpeed: -0.278 },
+      { id: 'neptune',  name: 'Neptune', emoji: '🔗', subtitle: 'Connect', color: 0x06B6D4, tex: '/textures/neptune.jpg',      radius: 120, orbitDist: 6500, orbitSpeed: 0.0006, offset: 3, inclination: 0.031, rotationSpeed: 0.298 },
+      { id: 'pluto',    name: 'Pluto',   emoji: '🌑', subtitle: 'Secret', color: 0x64748B, tex: '/textures/plutomap.jpg',     radius: 40,  orbitDist: 7500, orbitSpeed: 0.0004, offset: 2, inclination: 0.300, rotationSpeed: -0.03 }
     ];
 
     layout.forEach((config) => {
@@ -134,6 +134,7 @@ export class Planets {
         radius: config.radius,
         orbitDist: config.orbitDist,
         orbitSpeed: config.orbitSpeed,
+        rotationSpeed: config.rotationSpeed || 0.2,
         offset: config.offset,
         inclination: config.inclination || 0,
         config: { color: config.color, emoji: config.emoji, name: config.name, subtitle: config.subtitle }
@@ -163,7 +164,7 @@ export class Planets {
       }
       p.body.position.set(px, py, finalZ);
       
-      p.mesh.rotation.y += delta * 0.2; // Axial rotation
+      p.mesh.rotation.y += delta * p.rotationSpeed; // Proportional axial rotation
       
       // Update label position
       const pos = p.mesh.position.clone();

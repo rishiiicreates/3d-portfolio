@@ -12,9 +12,7 @@ import { ShootingStars } from './world/ShootingStars.js';
 import { AsteroidBelt } from './world/AsteroidBelt.js';
 import { SpaceDust } from './world/SpaceDust.js';
 import { SunCorona } from './world/SunCorona.js';
-import { Galaxies } from './world/Galaxies.js';
-import { Nebulas } from './world/Nebulas.js';
-import { Constellations } from './world/Constellations.js';
+import { RealSpace } from './world/RealSpace.js';
 
 class Application {
   constructor() {
@@ -92,9 +90,7 @@ class Application {
     this.asteroidBelt = new AsteroidBelt(this.scene);
     this.spaceDust = new SpaceDust(this.scene);
     this.sunCorona = new SunCorona(this.scene);
-    this.galaxies = new Galaxies(this.scene);
-    this.nebulas = new Nebulas(this.scene);
-    this.constellations = new Constellations(this.scene);
+    this.realSpace = new RealSpace(this.scene);
 
     // Initial Resize
     // Handled by IsometricCamera constructor and resize listener
@@ -171,9 +167,7 @@ class Application {
     if (this.asteroidBelt) this.asteroidBelt.update(time, delta);
     if (this.spaceDust) this.spaceDust.update(time, delta);
     if (this.sunCorona) this.sunCorona.update(time, delta);
-    if (this.galaxies) this.galaxies.update(delta);
-    if (this.nebulas) this.nebulas.update(delta);
-    if (this.constellations) this.constellations.update(delta);
+    if (this.realSpace) this.realSpace.update(delta);
 
     // Render
     this.renderer.render(this.scene, this.cameraController.camera);

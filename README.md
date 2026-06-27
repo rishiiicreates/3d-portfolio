@@ -1,6 +1,6 @@
-# 3D Interactive Solar System Portfolio
+# 3D Interactive Solar System
 
-A highly interactive, 3D web-based portfolio built using **Three.js** and **Cannon.js**. Instead of scrolling through a traditional webpage, visitors pilot a spacecraft through a procedurally generated solar system where each planet serves as a unique node for different portfolio sections (Projects, Experience, About Me, etc.).
+A highly interactive, 3D web-based solar system built using **Three.js** and **Cannon.js**. Instead of scrolling through a traditional webpage, visitors pilot a spacecraft through a procedurally generated solar system where each planet serves as a unique node for different portfolio sections (Projects, Experience, About Me, etc.).
 
 ## 🚀 Features
 
